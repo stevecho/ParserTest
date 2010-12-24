@@ -35,9 +35,22 @@ namespace :parser do
     
     # Feedzirra::Feed.add_common_feed_entry_elements("media:content", :value => :url, :as => :media_content) 
     # Feedzirra::Feed.add_common_feed_entry_elements("media:title", :as => :media_title) 
+    # Feedzirra::Feed.add_common_feed_entry_elements("media:description", :as => :media_description) 
+
     
-    feed = Feedzirra::Feed.fetch_and_parse("http://dev.blog.canadianbusiness.com/category/gallery/feed/?show_custom_feed=photo")
-    # feed = Feedzirra::Feed.fetch_and_parse("http://www2.macleans.ca/feed/rotator")
+    Feedzirra::Feed.feed_classes.map{|k| eval("#{k}Entry") }.each do |klass| 
+      klass.send(:elements, "media:content", :value => :url, :as => :media_content) 
+      klass.send(:elements, "media:title", :as => :media_title) 
+      klass.send(:elements, "media:description", :as => :media_description) 
+      klass.send(:elements, 'media:content', :value => :url, :as => :media_urls) 
+      # klass.send(:elements, 'media:title', :as => :media_titles) 
+      # klass.send(:elements, 'media:description', :as => :media_descriptions) 
+    end
+    
+    
+    
+    # feed = Feedzirra::Feed.fetch_and_parse("http://dev.blog.canadianbusiness.com/category/gallery/feed/?show_custom_feed=photo")
+    feed = Feedzirra::Feed.fetch_and_parse("http://www2.macleans.ca/feed/rotator")
     
     
     puts feed.title
@@ -52,11 +65,10 @@ namespace :parser do
       puts "published ===> #{entry.published}"
       puts "categories ===> #{entry.categories}"
       puts "content ===> #{entry.content}"
-      puts "media contents ===> #{entry.media_contents}"
-      # puts "media titles ===> #{entry.media_title}"
+      puts "media content ===> #{entry.media_urls}"
+      puts "media titles ===> #{entry.media_title}"
+      puts "media description ===> #{entry.media_description}"
       puts "-----------------------------------------------"
     end
-    
-    
   end
 end
