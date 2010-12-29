@@ -49,8 +49,8 @@ namespace :parser do
     
     
     
-    # feed = Feedzirra::Feed.fetch_and_parse("http://dev.blog.canadianbusiness.com/category/gallery/feed/?show_custom_feed=photo")
-    feed = Feedzirra::Feed.fetch_and_parse("http://www2.macleans.ca/feed/rotator")
+    feed = Feedzirra::Feed.fetch_and_parse("http://dev.blog.canadianbusiness.com/category/gallery/feed/?show_custom_feed=photo")
+    # feed = Feedzirra::Feed.fetch_and_parse("http://www2.macleans.ca/feed/rotator")
     
     
     puts feed.title
@@ -65,9 +65,7 @@ namespace :parser do
       puts "published ===> #{entry.published}"
       puts "categories ===> #{entry.categories}"
       puts "content ===> #{entry.content}"
-      puts "media content ===> #{entry.media_urls}"
-      puts "media titles ===> #{entry.media_title}"
-      puts "media description ===> #{entry.media_description}"
+      puts "meidas ===> #{entry.medias}"
       puts "-----------------------------------------------"
     end
   end
